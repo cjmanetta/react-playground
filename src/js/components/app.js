@@ -1,8 +1,9 @@
 var React = require('react');
+var ContactContainer = require('./contact-container');
 
 var App = React.createClass({
   render:function(){
-    return <h1>My flux App</h1>
+    return <ContactContainer />
   }
 });
 

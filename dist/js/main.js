@@ -31,7 +31,9 @@ function drainQueue() {
         currentQueue = queue;
         queue = [];
         while (++queueIndex < len) {
-            currentQueue[queueIndex].run();
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
         }
         queueIndex = -1;
         len = queue.length;
@@ -83,7 +85,6 @@ process.binding = function (name) {
     throw new Error('process.binding is not supported');
 };
 
-// TODO(shtylman)
 process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
@@ -19810,19 +19811,55 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":29}],157:[function(require,module,exports){
 var React = require('react');
+var ContactContainer = require('./contact-container');
 
 var App = React.createClass({displayName: "App",
   render:function(){
-    return React.createElement("h1", null, "My flux App")
+    return React.createElement(ContactContainer, null)
   }
 });
 
 module.exports = App;
 
-},{"react":156}],158:[function(require,module,exports){
+},{"./contact-container":158,"react":156}],158:[function(require,module,exports){
+var React = require('react');
+
+var ContactContainer = React.createClass({displayName: "ContactContainer",
+
+  propTypes: function(){
+    contactPool: React.PropTypes.array
+  },
+
+  //normally we would have getInitialState return contactPool: [] as a placeholder for when the page loads and then we would have an ajax call to retreive the contactPool from the server
+  getInitialState: function(){
+    return {
+    contactPool: [{name: "Barry", phone: "410-345-2876"}, {name: "Monty", phone: "980-335-9876"}, {name: "Lisa", phone: "675-342-7654"}, {name: "Irene", phone: "987-765-5436"}, {name: "Deborah", phone: "657-345-8765"}]
+    }
+  },
+
+  render: function(){
+
+    var contactListing = this.state.contactPool.map(function(contact){
+      return(
+          React.createElement("div", null, 
+            React.createElement("h1", null, contact.name), 
+            React.createElement("small", null, contact.phone)
+          )
+      )
+    });
+
+    return (
+      React.createElement("div", null, contactListing)
+    );
+  }
+});
+
+module.exports = ContactContainer;
+
+},{"react":156}],159:[function(require,module,exports){
 var App = require('./components/app');
 var React = require('react');
 
 React.render(React.createElement(App, null), document.querySelector('#main'));
 
-},{"./components/app":157,"react":156}]},{},[158]);
+},{"./components/app":157,"react":156}]},{},[159]);
