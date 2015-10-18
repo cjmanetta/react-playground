@@ -21,6 +21,7 @@ var ContactContainer = React.createClass({
             <h1>{contact.name}</h1>
             <small>{contact.phone}</small>
           </div>
+
       )
     });
 

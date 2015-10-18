@@ -19845,6 +19845,7 @@ var ContactContainer = React.createClass({displayName: "ContactContainer",
             React.createElement("h1", null, contact.name), 
             React.createElement("small", null, contact.phone)
           )
+
       )
     });
 
